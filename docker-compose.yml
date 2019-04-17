@@ -1,0 +1,20 @@
+version: "3"
+services:
+  backend:
+    build:
+      context: backend
+      args:
+        - PYTHON_VERSION
+    ports:
+      - "5000:5000"
+
+  frontend:
+    build:
+      context: frontend
+      args:
+        - NODE_VERSION
+    ports:
+      - "3000:3000"
+
+  itests:
+    build: itests

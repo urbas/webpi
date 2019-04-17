@@ -1,0 +1,40 @@
+### JS
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# dependencies
+node_modules/
+
+# testing
+coverage/
+
+# production
+build/
+
+### misc
+.DS_Store
+
+### Python
+*.pyc
+__pycache__/
+.pytest_cache/
+.venv/
+.coverage*
+test-results/
+*.egg-info/
+
+# Rope-specific stuff:
+.ropeproject/
+
+### vscode
+**/.vscode/tags
+
+### Cypress end-to-end-testing
+cypress/videos
+cypress/screenshots
+
+# Terraform
+.terraform/
+*.tfstate
+*.backup

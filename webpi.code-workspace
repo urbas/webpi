@@ -1,0 +1,19 @@
+{
+  "folders": [
+    {
+      "path": ".", "name": "root"
+    },
+    {
+      "path": "backend"
+    },
+    {
+      "path": "frontend"
+    },
+    {
+      "path": "itests"
+    }
+  ],
+  "settings": {
+    "editor.detectIndentation": false
+  }
+}

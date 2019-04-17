@@ -1,0 +1,16 @@
+{
+  "name": "itests",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "cypress open",
+    "itests": "wait-on http://backend:5000/api/v1/health && wait-on http://frontend:3000/ && cypress run",
+    "fmt": "prettier --write \"cypress/**/*.js\""
+  },
+  "devDependencies": {
+    "wait-on": "3.2.0",
+    "cypress": "3.2.0",
+    "prettier": "1.17.0"
+  },
+  "dependencies": {}
+}

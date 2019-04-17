@@ -1,0 +1,12 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    // NB: we hide sub-projects because they are opened separately
+    "backend": true,
+    "clients": true,
+    "frontend": true,
+    "itests": true,
+    "terraform": true
+  }
+}
