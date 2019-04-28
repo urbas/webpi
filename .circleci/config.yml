@@ -1,0 +1,10 @@
+version: 2.0
+jobs:
+  build:
+    steps:
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Integration Tests
+          command: |
+            NODE_VERSION=$(cat .nvmrc) PYTHON_VERSION=$(cat .python-version) docker-compose run itests npm run itests
