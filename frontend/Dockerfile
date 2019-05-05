@@ -2,7 +2,7 @@ ARG NODE_VERSION
 FROM node:${NODE_VERSION}-slim
 
 ADD *.json /
-RUN npm install --no-save && npm cache clean --force
+RUN npm ci --no-save && npm cache clean --force
 
 ENV NODE_PATH=/node_modules
 ENV PATH=/node_modules/.bin:$PATH
