@@ -1,4 +1,4 @@
-# webpi
+# webpi [![Build Status](https://travis-ci.com/urbas/webpi.svg?branch=master)](https://travis-ci.com/urbas/webpi)
 
 # Quickstart
 Install docker and docker-compose (see the "Dependencies" section below) and run:
