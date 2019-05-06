@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import axios from "axios";
 
 class App extends Component {
   constructor(props) {
@@ -11,8 +10,9 @@ class App extends Component {
 
   async componentDidMount() {
     try {
-      const health_response = await axios.get("/api/v1/health");
-      this.setState({ healthy: health_response.data.healthy });
+      const health_response = await fetch("/api/v1/health");
+      const health_data = await health_response.json();
+      this.setState({ healthy: health_data.healthy });
     } catch (err) {
       console.log(err);
       this.setState({ healthy: false });
