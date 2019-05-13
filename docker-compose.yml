@@ -11,6 +11,7 @@ services:
   frontend:
     build:
       context: frontend
+      dockerfile: dev.Dockerfile
       args:
         - NODE_VERSION
     ports:
