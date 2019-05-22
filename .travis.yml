@@ -9,6 +9,7 @@ jobs:
       script: NODE_VERSION=$(cat .nvmrc) PYTHON_VERSION=$(cat .python-version) docker-compose run itests npm run itests
     - name: Backend Unit Tests
       script: |
+        set -ex
         cd backend
         docker build -t webpi-backend:latest --file dev.Dockerfile --build-arg PYTHON_VERSION=$(cat ../.python-version) .
         docker run -i webpi-backend:latest pytest
@@ -16,6 +17,7 @@ jobs:
         docker run -i webpi-backend:latest black --check webpi
     - name: Frontend Unit Tests
       script: |
+        set -ex
         cd frontend
         docker build -t webpi-frontend:latest --file dev.Dockerfile --build-arg NODE_VERSION=$(cat ../.nvmrc) .
         docker run -e CI=true -i webpi-frontend:latest npm test -- --coverage
