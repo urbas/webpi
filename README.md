@@ -1,7 +1,7 @@
 # webpi [![Build Status](https://travis-ci.com/urbas/webpi.svg?branch=master)](https://travis-ci.com/urbas/webpi)
 
 # Quickstart
-Install docker and docker-compose (see the "Dependencies" section below) and run:
+Install docker and docker-compose (see "Dependencies" section below) and run:
 ```bash
 NODE_VERSION=$(cat .nvmrc) PYTHON_VERSION=$(cat .python-version) docker-compose up --build backend frontend
 ```
@@ -23,12 +23,7 @@ Bring up Cypress GUI so you can run integration tests interactively:
 ```bash
 cd itests && CYPRESS_baseUrl=http://localhost:3000 npm start
 ```
-Note that you will have to start a working webpi cluster separately (just follow the quickstart above). Frontend server has to be available at the url you specify with the `CYPRESS_*Url` environment variables.
-
-# CI/CD
-Navigate to the [CI/CD dashboard].
-
-The CI/CD pipeline is defined in [`bitbucket-pipelines.yml`](./bitbucket-pipelines.yml).
+Note that you will have to start a working webpi cluster separately (just follow the quickstart above). Frontend server has to be available at the url you specify with the `CYPRESS_baseUrl` environment variable.
 
 # Dependencies
 
