@@ -14,7 +14,7 @@
     "lint": "eslint --max-warnings 0 src/",
     "eject": "react-scripts eject",
     "fmt": "prettier --write \"src/**/*.js\"",
-    "check-fmt": "prettier -l \"src/**/*.js\""
+    "check-fmt": "prettier --check \"src/**/*.js\""
   },
   "devDependencies": {
     "enzyme": "3.9.0",
