@@ -1,9 +1,20 @@
+import flask_login
 from flask import Flask
-from webpi.api.v1 import health
-
-APP = Flask(__name__)
-APP.register_blueprint(health.API)
+from webpi.api.v1 import auth, health
+from webpi.users import user_loader
 
 
-def test_client():
-    return APP.test_client()
+def create_app(users=None):
+    app = Flask(__name__)
+    app.secret_key = "super secret secret"
+    app.register_blueprint(auth.API)
+    app.register_blueprint(health.API)
+    login_manager = flask_login.LoginManager()
+    login_manager.init_app(app)
+    login_manager.user_loader(user_loader)
+    app.config.users = users or {"foo@bar.com": {"password": "test1234"}}
+    return app
+
+
+def test_client(users=None):
+    return create_app(users).test_client()

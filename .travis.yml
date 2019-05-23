@@ -13,8 +13,8 @@ jobs:
         cd backend
         docker build -t webpi-backend:latest --file dev.Dockerfile --build-arg PYTHON_VERSION=$(cat ../.python-version) .
         docker run -i webpi-backend:latest pytest
-        docker run -i webpi-backend:latest pylint -j0 webpi
-        docker run -i webpi-backend:latest black --check webpi
+        docker run -i webpi-backend:latest pylint -j0 webpi tests
+        docker run -i webpi-backend:latest black --check webpi tests
         set +x
     - name: Frontend Unit Tests
       script: |

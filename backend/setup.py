@@ -11,7 +11,7 @@ try:
 except FileNotFoundError:
     README = ""
 
-REQUIREMENTS = ["flask>=1"]
+REQUIREMENTS = ["flask>=1", "Flask-Login==0.4.1"]
 
 SETUP_REQUIREMENTS = ["pytest-runner"]
 
