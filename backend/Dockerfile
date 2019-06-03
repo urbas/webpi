@@ -11,4 +11,4 @@ ADD . ${SRC_DIR}
 
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "python", "-c", "import requests; r = requests.get(\"http://localhost:5000/api/v1/health\"); r.raise_for_status()" ]
 
-CMD gunicorn -b 0.0.0.0:5000 -w 4 webpi.app:APP
+CMD gunicorn -b 0.0.0.0:5000 -w 4 webpi.wsgi:APP
