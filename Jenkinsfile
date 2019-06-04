@@ -19,6 +19,7 @@ pipeline {
     }
 
     stage("Deploy") {
+      when { tag "v*" }
       steps {
         sh "sudo docker kill webpi-backend || echo 'The container was not running...'"
         sh "sudo docker rm webpi-backend || echo 'The container did not exist...'"
