@@ -49,10 +49,27 @@ def test_wrong_user():
         assert user_response.status_code == 401
 
 
-def test_missing_email_password():
-    login_response = test_client().post(
-        "/api/v1/auth/login",
-        data=dumps({"email": "foo@bar.com"}),
-        content_type="application/json",
-    )
-    assert login_response.status_code == 400
+def test_missing_password():
+    with test_client(users=TEST_USERS) as client:
+        login_response = client.post(
+            "/api/v1/auth/login",
+            data=dumps({"email": "foo@bar.com"}),
+            content_type="application/json",
+        )
+        assert login_response.status_code == 400
+
+        user_response = client.get("/api/v1/auth/user")
+        assert user_response.status_code == 401
+
+
+def test_missing_email():
+    with test_client(users=TEST_USERS) as client:
+        login_response = client.post(
+            "/api/v1/auth/login",
+            data=dumps({"password": "mystery"}),
+            content_type="application/json",
+        )
+        assert login_response.status_code == 400
+
+        user_response = client.get("/api/v1/auth/user")
+        assert user_response.status_code == 401
