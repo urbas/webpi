@@ -1,4 +1,5 @@
 # webpi [![Build Status](https://travis-ci.org/urbas/webpi.svg?branch=master)](https://travis-ci.org/urbas/webpi)
+Raspberry Pi web server.
 
 # Quickstart
 Install docker and docker-compose (see "Dependencies" section below) and run:
