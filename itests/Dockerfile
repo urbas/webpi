@@ -1,4 +1,4 @@
-FROM cypress/base:10.15.3
+FROM cypress/base:10.16.0
 
 ADD *.json /
 RUN npm ci --no-save && npm cache clean --force
