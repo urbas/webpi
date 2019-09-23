@@ -18,9 +18,7 @@ class Home extends Component {
   }
 
   render() {
-    return (
-      <div>Health: {this.state.healthy.toString()}</div>
-    );
+    return <div>Health: {this.state.healthy.toString()}</div>;
   }
 }
 
