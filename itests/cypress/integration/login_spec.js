@@ -1,5 +1,5 @@
 describe("Login", () => {
-  it("login screen should contain username and password fields", () => {
+  it("must successfully log in", () => {
     cy.visit("/login");
     cy.get("#username")
       .type("foo@bar.com")
@@ -8,5 +8,6 @@ describe("Login", () => {
       .type("test1234")
       .should("have.value", "test1234");
     cy.get("#log-in-button").click();
+    cy.visit("api/v1/auth/user");
   });
 });
