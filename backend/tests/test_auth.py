@@ -5,7 +5,7 @@ from webpi.app import test_client
 TEST_USERS = {"foo@bar.com": {"password": "mystery"}}
 
 
-def test_login():
+def test_login_logout():
     with test_client(users=TEST_USERS) as client:
         login_response = client.post(
             "/api/v1/auth/login",
@@ -17,6 +17,12 @@ def test_login():
         user_response = client.get("/api/v1/auth/user")
         assert user_response.status_code == 200
         assert user_response.json == {"email": "foo@bar.com"}
+
+        logout_response = client.post("/api/v1/auth/logout")
+        assert logout_response.status_code == 200
+
+        user_response = client.get("/api/v1/auth/user")
+        assert user_response.status_code == 401
 
 
 def test_login_invalid():

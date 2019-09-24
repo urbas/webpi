@@ -23,6 +23,7 @@ __pycache__/
 .coverage*
 test-results/
 *.egg-info/
+htmlcov/
 
 # Rope-specific stuff:
 .ropeproject/

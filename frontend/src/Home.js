@@ -8,9 +8,9 @@ class Home extends Component {
 
   async componentDidMount() {
     try {
-      const health_response = await fetch("/api/v1/health");
-      const health_data = await health_response.json();
-      this.setState({ healthy: health_data.healthy });
+      const healthResponse = await fetch("/api/v1/health");
+      const healthData = await healthResponse.json();
+      this.setState({ healthy: healthData.healthy });
     } catch (err) {
       console.log(err);
       this.setState({ healthy: false });

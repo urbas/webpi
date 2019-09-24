@@ -1,6 +1,6 @@
 from flask import Blueprint, request, abort, current_app
 from flask.json import jsonify
-from flask_login import login_required, current_user, login_user
+from flask_login import login_required, current_user, login_user, logout_user
 from webpi.users import User
 
 API = Blueprint("auth", __name__, url_prefix="/api/v1/auth")
@@ -30,4 +30,10 @@ def login():
         return abort(400)
 
     login_user(User(email))
+    return jsonify({})
+
+
+@API.route("/logout", methods=["POST"])
+def logout():
+    logout_user()
     return jsonify({})

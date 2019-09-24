@@ -3,11 +3,19 @@ import React, { Component } from "react";
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = { email: "", password: "" };
-
+    this.state = { email: "", password: "", loggedIn: false };
     this.onEmailChanged = this.onEmailChanged.bind(this);
     this.onPasswordChanged = this.onPasswordChanged.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  async componentDidMount() {
+    try {
+      const userResponse = await fetch("/api/v1/auth/user");
+      this.setState({ loggedIn: userResponse.ok });
+    } catch (err) {
+      this.setState({ loggedIn: false });
+    }
   }
 
   onEmailChanged(event) {
@@ -20,17 +28,19 @@ class Login extends Component {
 
   async onSubmit(event) {
     try {
-      const login_response = await fetch("/api/v1/auth/login", {
+      const loginResponse = await fetch("/api/v1/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(this.state)
+        body: JSON.stringify({
+          email: this.state.email,
+          password: this.state.password
+        })
       });
-      const login_data = await login_response.json();
-      console.log(login_data);
+      this.setState({ loggedIn: loginResponse.ok });
     } catch (err) {
-      console.log(err);
+      this.setState({ loggedIn: false });
     }
   }
 
@@ -59,8 +69,9 @@ class Login extends Component {
               value={this.state.password}
               onChange={this.onPasswordChanged}
             />
+            <input id="isLoggedIn" type="hidden" value={this.state.loggedIn} />
             <button
-              id="log-in-button"
+              id="logInButton"
               type="submit"
               className="pure-button pure-button-primary"
             >
