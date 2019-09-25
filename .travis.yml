@@ -18,6 +18,7 @@ jobs:
       script: |
         NODE_VERSION=$(cat .nvmrc) PYTHON_VERSION=$(cat .python-version) docker-compose build --parallel
         NODE_VERSION=$(cat .nvmrc) PYTHON_VERSION=$(cat .python-version) docker-compose run itests npm run itests
+
     - name: Backend Unit Tests
       script: |
         set -ex
@@ -27,6 +28,7 @@ jobs:
         docker run -i webpi-backend:latest pylint -j0 webpi tests
         docker run -i webpi-backend:latest black --check webpi tests
         set +x
+
     - name: Frontend Unit Tests
       script: |
         set -ex
@@ -35,18 +37,34 @@ jobs:
         docker run -e CI=true -i webpi-frontend:latest npm test -- --coverage
         docker run -i webpi-frontend:latest npm run --silent check-fmt
         set +x
+
     - name: Build Frontend
       script: |
         cd frontend
         sudo docker build -t webpi-frontend:latest --build-arg NODE_VERSION=$(cat ../.nvmrc) .
-        sudo docker run -i webpi-frontend:latest > webpi-$(git describe --tags '--match=v*').tar.gz
-        tar -tf webpi-$(git describe --tags '--match=v*').tar.gz
+        sudo docker run -i webpi-frontend:latest > webpi-frontend.tar.gz
 
-# deploy:
-#   provider: releases
-#   api_key:
-#       secure: "GITHUB OAUTH TOKEN"
-#   file: "FILE TO UPLOAD"
-#   skip_cleanup: true
-#   on:
-#     tags: true
+    - name: Deploy Backend
+      if: tag =~ ^v
+      script: |
+        cd backend
+        sudo docker build -t urbas/webpi-backend:$(git describe --tags '--match=v*') --build-arg PYTHON_VERSION=$(cat ../.python-version) .
+        echo "$DOCKER_PASSWORD" | sudo docker login -u "$DOCKER_USERNAME" --password-stdin
+        sudo docker push urbas/webpi-backend:$(git describe --tags '--match=v*')
+
+
+deploy:
+  - provider: releases
+    skip_cleanup: true
+    api_key:
+      secure: WCOmV8D8ASU8IALFN6VNJ1pW3Bv2P8LZ2Sh5tXC+EbLloxb839X7j7Wih2cRAIBDEMdWdYByDDZD5Smoy6wEJQQBI6VmNbC+yBfNgpnfrITOYdq7mI8lH2AkmXxOsMPvTrBcbWE7ydSY0FHZ82+CuhIi+urwlECSscyzTo76iLVYdYi87hkqsx6OI3iL/METNFSSNd3ZZdr1+KBFvTYQx/4yFBKbj8rBlQgORF38gK7Q7h2sIC2Cp6inorY0JErhkuiVhVY4UWr/+tTfk+fjT6X5xiPkMDjXDNA3qz1UYqCDTJlcFy1oZsAYhblOXAhH+Az2mKynzMV5Q9YNj5pdIEoudGmxjzbyKW6/60ecOPh6ds+VIQr//XEkgZUWzxx+VOZKFZmddhWbMuBZcgf2L9ymq5kmIQHhgwvg2WDtkUDlUGe6ZC5MGbFPMPxU1+F6VEI5FzFsdlwxI+DMMVm5LpbnL6SwPSI7PT4edyKEfde7+MWYL7ZCR/bdYz9C8NOI0+XfDQpbuHeIrMZgizKvDqOzRhXPGBfCU1tyO3n24MlI1TljCXqoNaex0A480HeiXEYLjVOkl3CAQ1dzk5geuUxIe1ROz0so5bpqj5Ys1uX0YUMznt88t73Vw1i0/5PoVBnS0cRX3kjJFUoeyN6hlV5TKRke5g/RFHfpAfCejIM=
+    file: webpi-frontend.tar.gz
+    on:
+      tags: true
+      repo: urbas/webpi
+  - provider: script
+    skip_cleanup: true
+    script: docker_push
+    on:
+      tags: true
+      repo: urbas/webpi
