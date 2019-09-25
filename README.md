@@ -1,7 +1,14 @@
 # webpi [![Build Status](https://travis-ci.org/urbas/webpi.svg?branch=master)](https://travis-ci.org/urbas/webpi)
 Raspberry Pi web server.
 
-# Quickstart
+# Installation
+The backend is available as a Docker image on Docker Hub: https://hub.docker.com/r/urbas/webpi-backend
+
+The frontend is static and available as a tar archive on GitHub as a release download. See [releases] for links.
+
+You can use [this nginx configuration] to serve both webpi's backend and frontend on the same machine.
+
+# Development quickstart
 Install docker and docker-compose (see "Dependencies" section below) and run:
 ```bash
 NODE_VERSION=$(cat .nvmrc) PYTHON_VERSION=$(cat .python-version) docker-compose up --build backend frontend
@@ -62,5 +69,7 @@ Just follow [docker-compose installation instructions].
 [nvm plugin]: https://github.com/lukechilds/zsh-nvm
 [nvm shell integration notes]: https://github.com/creationix/nvm#deeper-shell-integration
 [oh-my-zsh]: https://github.com/robbyrussell/oh-my-zsh
+[releases]: https://github.com/urbas/webpi/releases
 [sudoless docker instructions]: https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user
+[this nginx configuration]: etc/nginx.conf
 [zsh nvm plugin notes]: https://github.com/lukechilds/zsh-nvm#auto-use
