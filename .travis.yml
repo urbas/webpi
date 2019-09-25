@@ -1,12 +1,22 @@
-language: python
+language: minimal
 services:
   - docker
+
+env:
+  - DOCKER_COMPOSE_VERSION=1.24.1
+
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
 
 jobs:
   include:
     - stage: test
       name: Integration Tests
       script: |
+        NODE_VERSION=$(cat .nvmrc) PYTHON_VERSION=$(cat .python-version) docker-compose build --parallel
         NODE_VERSION=$(cat .nvmrc) PYTHON_VERSION=$(cat .python-version) docker-compose run itests npm run itests
     - name: Backend Unit Tests
       script: |
