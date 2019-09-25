@@ -32,8 +32,8 @@ htmlcov/
 **/.vscode/tags
 
 ### Cypress end-to-end-testing
-cypress/videos
-cypress/screenshots
+itests/cypress/videos/
+itests/cypress/screenshots/
 
 # Terraform
 .terraform/

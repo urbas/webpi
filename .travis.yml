@@ -6,7 +6,8 @@ jobs:
   include:
     - stage: test
       name: Integration Tests
-      script: NODE_VERSION=$(cat .nvmrc) PYTHON_VERSION=$(cat .python-version) docker-compose run itests npm run itests
+      script: |
+        NODE_VERSION=$(cat .nvmrc) PYTHON_VERSION=$(cat .python-version) docker-compose run itests npm run itests
     - name: Backend Unit Tests
       script: |
         set -ex
