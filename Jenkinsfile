@@ -7,10 +7,11 @@ pipeline {
         sh "env"
       }
     }
-    
+
     stage("Deploy") {
       when { tag "v*" }
       steps {
+        sh "git clean -ffdx ."
         withCredentials([string(credentialsId: 'urbas-dockerhub', variable: 'DOCKER_PASSWORD')]) {
           sh """
             cd backend
