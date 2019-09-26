@@ -62,9 +62,3 @@ deploy:
     on:
       tags: true
       repo: urbas/webpi
-  - provider: script
-    skip_cleanup: true
-    script: docker_push
-    on:
-      tags: true
-      repo: urbas/webpi
