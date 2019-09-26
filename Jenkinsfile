@@ -7,6 +7,7 @@ pipeline {
         sh "env"
       }
     }
+    
     stage("Deploy") {
       when { tag "v*" }
       steps {
