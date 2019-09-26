@@ -52,7 +52,6 @@ jobs:
         echo "$DOCKER_PASSWORD" | sudo docker login -u "$DOCKER_USERNAME" --password-stdin
         sudo docker push urbas/webpi-backend:$(git describe --tags '--match=v*')
 
-
 deploy:
   - provider: releases
     skip_cleanup: true

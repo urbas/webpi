@@ -2,18 +2,12 @@ pipeline {
   agent { label "raspbian" }
 
   stages {
-    stage("Build") {
-      steps {
-        sh "env"
-      }
-    }
-
     stage("Deploy") {
       when { tag "v*" }
       steps {
-        sh "git clean -ffdx ."
         withCredentials([string(credentialsId: 'urbas-dockerhub', variable: 'DOCKER_PASSWORD')]) {
           sh """
+            git clean -ffdx .
             cd backend
             env
             VERSION=\$(git describe --tags '--match=v*')
