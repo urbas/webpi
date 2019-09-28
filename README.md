@@ -36,11 +36,13 @@ Note that you will have to start a working webpi cluster separately (just follow
 # Dependencies
 
 ## nvm
-To manage the nodejs version usesd throughout this project, you should use nvm. The currently supported nodejs/npm version is encoded in the [`.nvmrc`](./.nvmrc) file.
+Use `nvm` to manage the nodejs version used in this project.
+
+This project's nodejs version is in the [`.nvmrc`](./.nvmrc) file.
 
 Please follow [nvm installation instructions].
 
-[oh-my-zsh] also has an [nvm plugin] which you can use directly.
+[oh-my-zsh] also has an [nvm plugin] that selects the nodejs version automatically.
 
 Run `nvm use` in the root of the repository. This should activate the node version required.
 
