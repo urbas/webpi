@@ -11,7 +11,7 @@ You can use [this nginx configuration] to serve both webpi's backend and fronten
 # Development quickstart
 Install docker and docker-compose (see "Dependencies" section below) and run:
 ```bash
-NODE_VERSION=$(cat .nvmrc) PYTHON_VERSION=$(cat .python-version) docker-compose up --build backend frontend
+NODE_VERSION=$(<.nvmrc) PYTHON_VERSION=$(<.python-version) docker-compose up --build backend frontend
 ```
 The command will spin up:
 
