@@ -1,3 +1,6 @@
+# 0.0.3
+- Updated frontend npm dependencies.
+
 # 0.0.2
 - Feature: Added log out support.
 
