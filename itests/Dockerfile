@@ -1,4 +1,4 @@
-FROM cypress/browsers:chrome69
+FROM cypress/included:3.8.3
 
 ADD *.json /
 RUN npm ci --no-save && npm cache clean --force
