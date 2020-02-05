@@ -24,6 +24,8 @@ __pycache__/
 test-results/
 *.egg-info/
 htmlcov/
+.mypy_cache/
+.eggs/
 
 # Rope-specific stuff:
 .ropeproject/
@@ -34,8 +36,3 @@ htmlcov/
 ### Cypress end-to-end-testing
 itests/cypress/videos/
 itests/cypress/screenshots/
-
-# Terraform
-.terraform/
-*.tfstate
-*.backup

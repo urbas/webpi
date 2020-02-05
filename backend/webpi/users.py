@@ -1,9 +1,6 @@
+from typing import Optional
 from flask import current_app
 from flask_login import UserMixin
-
-
-def user_loader(email):
-    return User(email) if email in current_app.config.users else None
 
 
 class User(UserMixin):
@@ -13,6 +10,10 @@ class User(UserMixin):
         self.id = email
 
     @property
-    def email(self):
+    def email(self) -> str:
         # pylint: disable=invalid-name
         return self.id
+
+
+def user_loader(email: str) -> Optional[User]:
+    return User(email) if email in current_app.config.users else None  # type: ignore
