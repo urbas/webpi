@@ -5,6 +5,10 @@ services:
       context: backend
       args:
         - PYTHON_VERSION
+    environment:
+      - WEBPI_CONFIG=/etc/webpi/config.yaml
+    volumes:
+      - ./etc/webpi:/etc/webpi
     ports:
       - "5000:5000"
 

@@ -7,7 +7,6 @@ describe("Login", () => {
     cy.get("#email").type("foo@bar.com");
     cy.get("#password").type("test1234");
     cy.get("#logInButton").click();
-    cy.get("#password").type("test1234");
     cy.get("#isLoggedIn").should(isLoggedInField => {
       expect(isLoggedInField.val()).to.eq('true');
     });

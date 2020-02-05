@@ -2,11 +2,11 @@ from json import dumps
 
 from webpi.app import test_client
 
-TEST_USERS = {"foo@bar.com": {"password": "mystery"}}
+TEST_CONFIG = {"users": {"foo@bar.com": {"password": "mystery"}}}
 
 
 def test_login_logout():
-    with test_client(users=TEST_USERS) as client:
+    with test_client(config=TEST_CONFIG) as client:
         login_response = client.post(
             "/api/v1/auth/login",
             data=dumps({"email": "foo@bar.com", "password": "mystery"}),
@@ -25,12 +25,22 @@ def test_login_logout():
         assert user_response.status_code == 401
 
 
+def test_login_no_config():
+    with test_client() as client:
+        login_response = client.post(
+            "/api/v1/auth/login",
+            data=dumps({"email": "foo@bar.com", "password": "mystery"}),
+            content_type="application/json",
+        )
+        assert login_response.status_code == 400
+
+
 def test_login_invalid():
     assert test_client().post("/api/v1/auth/login").status_code == 400
 
 
 def test_wrong_password():
-    with test_client(users=TEST_USERS) as client:
+    with test_client(config=TEST_CONFIG) as client:
         login_response = client.post(
             "/api/v1/auth/login",
             data=dumps({"email": "foo@bar.com", "password": "wrong"}),
@@ -43,7 +53,7 @@ def test_wrong_password():
 
 
 def test_wrong_user():
-    with test_client(users=TEST_USERS) as client:
+    with test_client(config=TEST_CONFIG) as client:
         login_response = client.post(
             "/api/v1/auth/login",
             data=dumps({"email": "wrong@email.com", "password": "mystery"}),
@@ -56,7 +66,7 @@ def test_wrong_user():
 
 
 def test_missing_password():
-    with test_client(users=TEST_USERS) as client:
+    with test_client(config=TEST_CONFIG) as client:
         login_response = client.post(
             "/api/v1/auth/login",
             data=dumps({"email": "foo@bar.com"}),
@@ -69,7 +79,7 @@ def test_missing_password():
 
 
 def test_missing_email():
-    with test_client(users=TEST_USERS) as client:
+    with test_client(config=TEST_CONFIG) as client:
         login_response = client.post(
             "/api/v1/auth/login",
             data=dumps({"password": "mystery"}),

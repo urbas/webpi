@@ -1,0 +1,3 @@
+users:
+  foo@bar.com:
+    password: test1234

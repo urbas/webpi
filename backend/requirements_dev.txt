@@ -1,6 +1,7 @@
 black==19.10b0
 blinker==1.4
 mypy==0.761
+pyfakefs==3.7.1
 pylint==2.4.4
 pytest-cov==2.8.1
 pytest-runner==5.2

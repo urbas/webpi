@@ -1,7 +1,7 @@
-from flask import Blueprint, request, abort, current_app
+from flask import Blueprint, request, abort
 from flask.json import jsonify
-from flask_login import login_required, current_user, login_user, logout_user
-from webpi.users import User
+from flask_login import login_required, current_user, logout_user
+from webpi import users
 
 API = Blueprint("auth", __name__, url_prefix="/api/v1/auth")
 
@@ -22,14 +22,9 @@ def login():
     if email is None or password is None:
         return abort(400)
 
-    user = current_app.config.users.get(email)
+    user = users.auth_user(email, password)
     if user is None:
         return abort(400)
-
-    if password != user.get("password"):
-        return abort(400)
-
-    login_user(User(email))
     return jsonify({})
 
 

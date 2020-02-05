@@ -1,10 +1,11 @@
+from typing import Dict
 import flask_login
 from flask import Flask
 from webpi.api.v1 import auth, health
 from webpi.users import user_loader
 
 
-def create_app(users=None):
+def create_app(config: Dict = None):
     app = Flask(__name__)
     app.secret_key = "super secret secret"
     app.register_blueprint(auth.API)
@@ -12,9 +13,9 @@ def create_app(users=None):
     login_manager = flask_login.LoginManager()
     login_manager.init_app(app)
     login_manager.user_loader(user_loader)
-    app.config.users = users or {"foo@bar.com": {"password": "test1234"}}
+    app.config.update(config or {})
     return app
 
 
-def test_client(users=None):
-    return create_app(users).test_client()
+def test_client(config: Dict = None):
+    return create_app(config).test_client()
