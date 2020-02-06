@@ -2,7 +2,7 @@
 Raspberry Pi web server.
 
 # Installation
-The backend is available as a Docker image on Docker Hub: https://hub.docker.com/r/urbas/webpi-backend
+The backend is available as a Docker image on Docker Hub: https://hub.docker.com/r/urbas/webpi-backend-arm
 
 The frontend is static and available as a tar archive on GitHub as a release download. See [releases] for links.
 
