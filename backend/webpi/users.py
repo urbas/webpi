@@ -33,12 +33,7 @@ def auth_user(email: str, password: str) -> Optional[User]:
         return None
 
     salt = base64.b64decode(user_record["salt"])
-    stored_hashed_password = base64.b64decode(user_record["password"])
-    hashed_password = hashlib.scrypt(
-        password.encode("utf-8"), salt=salt, n=2 ** 8, r=64, p=1
-    )
-
-    if hashed_password != stored_hashed_password:
+    if hash_password(password, salt) != base64.b64decode(user_record["password"]):
         return None
 
     user = User(email)
@@ -46,16 +41,19 @@ def auth_user(email: str, password: str) -> Optional[User]:
     return user
 
 
+def hash_password(password, salt):
+    return hashlib.scrypt(password.encode("utf-8"), salt=salt, n=2 ** 8, r=64, p=1)
+
+
 def serialize_password(password):
+    """
+    prints the salted-hashed password as YAML so you can paste it directly into your configuration
+    """
     salt = os.urandom(10)
     print(
         yaml.dump(
             {
-                "password": base64.b64encode(
-                    hashlib.scrypt(
-                        password.encode("utf-8"), salt=salt, n=2 ** 8, r=64, p=1
-                    )
-                ).decode(),
+                "password": base64.b64encode(hash_password(password, salt)).decode(),
                 "salt": base64.b64encode(salt).decode(),
             },
             default_flow_style=False,
