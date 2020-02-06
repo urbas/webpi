@@ -2,7 +2,15 @@ from json import dumps
 
 from webpi.app import test_client
 
-TEST_CONFIG = {"users": {"foo@bar.com": {"password": "mystery"}}}
+TEST_CONFIG = {
+    "users": {
+        "foo@bar.com": {
+            "password": "MaIWphuXxWHfTHSk0Bsk7Y/5If7V+ZzgDNZiKek4eKS3ucKn+GZwX0ZMxtYHCRC2"
+            "tMiqQyGHFnL9JNQfiaEdIw==",
+            "salt": "RRcyQZF51iM=",
+        }
+    }
+}
 
 
 def test_login_logout():

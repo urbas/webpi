@@ -1,3 +1,6 @@
 users:
   foo@bar.com:
-    password: test1234
+    # to generate salt-hashed passwords:
+    #   python -c "from webpi import users; users.serialize_password('yourpassword')"
+    password: ScejHHEWFdTPXb8c2/T5fwCw9tzXJ1iW3Pf6CjIrX/l7AmRd7JxovlbIGBicToQK2v0YXPGpzIS3iwS0R2/Q6A==
+    salt: DM9X5i4muvNl9g==
