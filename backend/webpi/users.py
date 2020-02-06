@@ -41,11 +41,11 @@ def auth_user(email: str, password: str) -> Optional[User]:
     return user
 
 
-def hash_password(password, salt):
+def hash_password(password: str, salt: bytes) -> bytes:
     return hashlib.scrypt(password.encode("utf-8"), salt=salt, n=2 ** 8, r=64, p=1)
 
 
-def serialize_password(password):
+def serialize_password(password: str) -> None:
     """
     prints the salted-hashed password as YAML so you can paste it directly into your configuration
     """
