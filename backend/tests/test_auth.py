@@ -1,20 +1,11 @@
 from json import dumps
 
 from webpi.app import test_client
-
-TEST_CONFIG = {
-    "users": {
-        "foo@bar.com": {
-            "password": "MaIWphuXxWHfTHSk0Bsk7Y/5If7V+ZzgDNZiKek4eKS3ucKn+GZwX0ZMxtYHCRC2"
-            "tMiqQyGHFnL9JNQfiaEdIw==",
-            "salt": "RRcyQZF51iM=",
-        }
-    }
-}
+from tests import test_app
 
 
 def test_login_logout():
-    with test_client(config=TEST_CONFIG) as client:
+    with test_client(config=test_app.TEST_CONFIG) as client:
         login_response = client.post(
             "/api/v1/auth/login",
             data=dumps({"email": "foo@bar.com", "password": "mystery"}),
@@ -48,7 +39,7 @@ def test_login_invalid():
 
 
 def test_wrong_password():
-    with test_client(config=TEST_CONFIG) as client:
+    with test_client(config=test_app.TEST_CONFIG) as client:
         login_response = client.post(
             "/api/v1/auth/login",
             data=dumps({"email": "foo@bar.com", "password": "wrong"}),
@@ -61,7 +52,7 @@ def test_wrong_password():
 
 
 def test_wrong_user():
-    with test_client(config=TEST_CONFIG) as client:
+    with test_client(config=test_app.TEST_CONFIG) as client:
         login_response = client.post(
             "/api/v1/auth/login",
             data=dumps({"email": "wrong@email.com", "password": "mystery"}),
@@ -74,7 +65,7 @@ def test_wrong_user():
 
 
 def test_missing_password():
-    with test_client(config=TEST_CONFIG) as client:
+    with test_client(config=test_app.TEST_CONFIG) as client:
         login_response = client.post(
             "/api/v1/auth/login",
             data=dumps({"email": "foo@bar.com"}),
@@ -87,7 +78,7 @@ def test_missing_password():
 
 
 def test_missing_email():
-    with test_client(config=TEST_CONFIG) as client:
+    with test_client(config=test_app.TEST_CONFIG) as client:
         login_response = client.post(
             "/api/v1/auth/login",
             data=dumps({"password": "mystery"}),

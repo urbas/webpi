@@ -7,7 +7,7 @@ from webpi.users import user_loader
 
 def create_app(config: Dict = None):
     app = Flask(__name__)
-    app.secret_key = "super secret secret"
+    app.secret_key = config.get("secret_key", None) if config else None
     app.register_blueprint(auth.API)
     app.register_blueprint(health.API)
     login_manager = flask_login.LoginManager()

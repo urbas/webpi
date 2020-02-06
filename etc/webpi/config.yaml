@@ -1,3 +1,5 @@
+# for more info on secret_key see https://flask.palletsprojects.com/en/1.1.x/api/?highlight=secret_key#flask.Flask.secret_key
+secret_key: please-set-to something
 users:
   foo@bar.com:
     # to generate salt-hashed passwords:
