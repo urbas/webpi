@@ -12,6 +12,6 @@ TEST_CONFIG = {
 }
 
 
-def test_secret_key():  # pylint: disable=invalid-name
+def test_secret_key():
     """check that the secret key of the app is read from the configuration"""
     assert app.create_app(TEST_CONFIG).secret_key == TEST_CONFIG["secret_key"]

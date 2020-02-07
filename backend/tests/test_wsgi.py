@@ -8,7 +8,7 @@ def test_wsgi_app():
     assert isinstance(wsgi.APP, Flask)
 
 
-def test_conf_file(fs, monkeypatch):  # pylint: disable=invalid-name
+def test_conf_file(fs, monkeypatch):
     fs.create_file(
         "/etc/webpi/config.yaml", contents=yaml.dump(test_app.TEST_CONFIG),
     )

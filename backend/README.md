@@ -34,7 +34,7 @@ pytest
 
 Linter:
 ```bash
-pylint webpi
+flake8 webpi tests setup.py
 ```
 
 Formatter:
