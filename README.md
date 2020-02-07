@@ -1,4 +1,4 @@
-# webpi [![Build Status](https://travis-ci.org/urbas/webpi.svg?branch=master)](https://travis-ci.org/urbas/webpi)
+# webpi [![Build Status](https://travis-ci.org/urbas/webpi.svg?branch=master)](https://travis-ci.org/urbas/webpi) [![pypi](https://badge.fury.io/py/webpi.svg)](https://pypi.org/project/webpi/)
 Raspberry Pi web server.
 
 # Installation
@@ -7,6 +7,11 @@ The backend is available as a Docker image on Docker Hub: https://hub.docker.com
 The frontend is static and available as a tar archive on GitHub as a release download. See [releases] for links.
 
 You can use [this nginx configuration] to serve both webpi's backend and frontend on the same machine.
+
+Instead of using docker, you can also install the backend via `pip`:
+```bash
+pip install webpi
+```
 
 # Development quickstart
 Install docker and docker-compose (see "Dependencies" section below) and run:

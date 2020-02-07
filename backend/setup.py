@@ -3,7 +3,10 @@
 
 """The setup script."""
 
+import os
 from setuptools import setup, find_packages
+
+version = os.environ.get("WEBPI_VERSION", "0.0.1")
 
 try:
     with open("README.md") as readme_file:
@@ -33,6 +36,7 @@ setup(
     install_requires=REQUIREMENTS,
     license="MIT license",
     long_description=README,
+    long_description_content_type="text/markdown",
     include_package_data=True,
     keywords="webpi",
     name="webpi",
@@ -41,6 +45,6 @@ setup(
     test_suite="tests",
     tests_require=TEST_REQUIREMENTS,
     url="https://github.com/urbas/webpi",
-    version="0.0.1",
+    version=version,
     zip_safe=False,
 )

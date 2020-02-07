@@ -3,7 +3,12 @@ services:
   - docker
 
 env:
-  - DOCKER_COMPOSE_VERSION=1.24.1
+  global:
+    - DOCKER_COMPOSE_VERSION=1.24.1
+    # TWINE_TEST_PASSWORD
+    - secure: kr/xG5/vgqdnprA3APrcrqJcKy9cvsj1oacsfpNvf8Z40V36iX+LJTARNsFuhGBvHtMwpoHgO3zQ1uq5JCHelo55oDAKKAAeko+AhZy7tSI/G4r7ci+3njW4Tog+lfxF2JH6zSc7kUnQZj5lbDQY663uyEa3Yg7jdDcPRob+VJPQR6q3MHOzQPBmSSaR0wwIseSH+c1ETKoKD1P9eS0uhgzj9ga81Qb0U+rHRSYRxbBim15R26OkcQ9Q3TXVHL4y58ywW0E+DI9mi1UrRqmixmWHkmF9gcHlqjVOzNGqB8lHpVfaZpYvTyAf6F/LSwKW379sSv+N4Y8CLqGHjzv2qw6ivKYrOexVCFEuqIbTV7mLjEepBRyHTh/XOgugsVlpe6e8PLsf0WkCxxrYQ3Rp6n/a+V9o212B5rE31RNOY78iP4lX6qkq5W4UJGRd75pIowtfJgMFc3eNDBhXE3FcR6dWS1gGnhHzYDwpZNnnn7aETOZpu98u8XSKOMQ5AuqNuQ+KGXqiZPif/qSKtooaOUBAF0NM8tQr9VuKgYH49H73D6nQkwnAJ4EaInNF//R0rWZ/txugYNjAOXcIkWqSdGIAG29tbVwzbB+SM7NPtJZrFbILWPCsAcULIggbHeA8FJtCW14pnJHGpDyW/iwhDkXQbBvjd/268JloJBn6S5w=
+    # TWINE_PASSWORD
+    - secure: Tcv7svUE6ptkVXWLyw4Dy/pyag6lIFODqij8A+DTRpfL2uvKouxy7tfjqSuLGa9QanulCDacNfrjLVqZtIEiUP1T702aMGySZY7Nfp67LdR731K4DrwwL/sX74Xwp8uftVdCEybJ6GLHJ9LkxpNAsszqkTAqsyL8fxvBuzwU1NvCLmIr2Qd+9ZL9m9Dns6Nz3HQki06K5aU8UCRGaDbWQ6Pl8qSldO3s4AnviJAQLVHKhyUE17qQY/8qTWudMfxnBkx5lTFj7Kafvn4aejICAi7phrtyp1Yo5zLXkE5WGDSRRjaWfW0/npP+EIRAmIhoc3Vu7jXONIFzkbLUCRIfGyX9Aetbu2p3a/Kw9pnNAg/42N7pC3cyMl1Vlx0eCxVBxsU/9JyLffqvjig6WEgn/qQjIzI7ZeJrqACpW0QXIKWzm0a0xG0W7mi1CjXtFZm5aH9C+K0F9f/dptBWXUop0lPnzRdGcMlcJX0/wB0zgYF7Q9FDKAdJ6fX+uNI8xKr76mhvhMcIVI6wzgnX1QKURRJAI6JXOiYUgHL6OzlsgsZ8u83ogqC0hu2v9Fi4Mc2DSrMmNHdQ3ETd3o6h76Bm4467APK748MKBD6IFM/0no0KsO+PkvjMNCyulkgg62kVkZ1tImAOEOKnjvYpIHDT0qNQUotG8jxT7IgJJbjEgoA=
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
@@ -45,13 +50,12 @@ jobs:
         sudo docker build -t webpi-frontend:latest --build-arg NODE_VERSION=$(cat ../.nvmrc) .
         sudo docker run -i webpi-frontend:latest > webpi-frontend.tar.gz
 
-    - name: Deploy Backend
+    - name: Test Publish Backend
+      script: TWINE_PASSWORD=$TWINE_TEST_PASSWORD TWINE_EXTRA_ARGS="--repository-url https://test.pypi.org/legacy/" scripts/pypi-publish.sh
+
+    - name: Publish Backend
       if: tag =~ ^v
-      script: |
-        cd backend
-        sudo docker build -t urbas/webpi-backend:$(git describe --tags '--match=v*') --build-arg PYTHON_VERSION=$(cat ../.python-version) .
-        echo "$DOCKER_PASSWORD" | sudo docker login -u "$DOCKER_USERNAME" --password-stdin
-        sudo docker push urbas/webpi-backend:$(git describe --tags '--match=v*')
+      script: scripts/pypi-publish.sh
 
 deploy:
   - provider: releases
