@@ -4,7 +4,7 @@ services:
 
 env:
   global:
-    - DOCKER_COMPOSE_VERSION=1.24.1
+    - DOCKER_COMPOSE_VERSION=1.25.1
     # TWINE_TEST_PASSWORD
     - secure: kr/xG5/vgqdnprA3APrcrqJcKy9cvsj1oacsfpNvf8Z40V36iX+LJTARNsFuhGBvHtMwpoHgO3zQ1uq5JCHelo55oDAKKAAeko+AhZy7tSI/G4r7ci+3njW4Tog+lfxF2JH6zSc7kUnQZj5lbDQY663uyEa3Yg7jdDcPRob+VJPQR6q3MHOzQPBmSSaR0wwIseSH+c1ETKoKD1P9eS0uhgzj9ga81Qb0U+rHRSYRxbBim15R26OkcQ9Q3TXVHL4y58ywW0E+DI9mi1UrRqmixmWHkmF9gcHlqjVOzNGqB8lHpVfaZpYvTyAf6F/LSwKW379sSv+N4Y8CLqGHjzv2qw6ivKYrOexVCFEuqIbTV7mLjEepBRyHTh/XOgugsVlpe6e8PLsf0WkCxxrYQ3Rp6n/a+V9o212B5rE31RNOY78iP4lX6qkq5W4UJGRd75pIowtfJgMFc3eNDBhXE3FcR6dWS1gGnhHzYDwpZNnnn7aETOZpu98u8XSKOMQ5AuqNuQ+KGXqiZPif/qSKtooaOUBAF0NM8tQr9VuKgYH49H73D6nQkwnAJ4EaInNF//R0rWZ/txugYNjAOXcIkWqSdGIAG29tbVwzbB+SM7NPtJZrFbILWPCsAcULIggbHeA8FJtCW14pnJHGpDyW/iwhDkXQbBvjd/268JloJBn6S5w=
     # TWINE_PASSWORD
@@ -20,34 +20,18 @@ jobs:
   include:
     - stage: test
       name: Integration Tests
-      script: |
-        NODE_VERSION=$(cat .nvmrc) PYTHON_VERSION=$(cat .python-version) docker-compose build --parallel
-        NODE_VERSION=$(cat .nvmrc) PYTHON_VERSION=$(cat .python-version) docker-compose run itests npm run itests
+      script: scripts/integration-tests.sh
 
     - name: Backend Unit Tests
-      script: |
-        set -ex
-        cd backend
-        docker build -t webpi-backend:latest --file dev.Dockerfile --build-arg PYTHON_VERSION=$(cat ../.python-version) .
-        docker run -i webpi-backend:latest black --check webpi tests
-        docker run -i webpi-backend:latest flake8 webpi tests
-        docker run -i webpi-backend:latest mypy webpi tests
-        docker run -i webpi-backend:latest pytest
-        set +x
+      script: scripts/backend-unit-tests.sh
 
     - name: Frontend Unit Tests
-      script: |
-        set -ex
-        cd frontend
-        docker build -t webpi-frontend:latest --file dev.Dockerfile --build-arg NODE_VERSION=$(cat ../.nvmrc) .
-        docker run -e CI=true -i webpi-frontend:latest npm test -- --coverage
-        docker run -i webpi-frontend:latest npm run --silent check-fmt
-        set +x
+      script: scripts/frontend-unit-tests.sh
 
     - name: Build Frontend
       script: |
         cd frontend
-        sudo docker build -t webpi-frontend:latest --build-arg NODE_VERSION=$(cat ../.nvmrc) .
+        sudo docker build -t webpi-frontend:latest --build-arg NODE_VERSION=$(<../.nvmrc) .
         sudo docker run -i webpi-frontend:latest > webpi-frontend.tar.gz
 
     - name: Test Publish Backend
