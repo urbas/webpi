@@ -34,7 +34,8 @@ jobs:
     - name: Test Publish Backend
       script: TWINE_PASSWORD=$TWINE_TEST_PASSWORD scripts/pypi-publish.sh --repository-url https://test.pypi.org/legacy/
 
-    - name: Publish Backend
+    - stage: publish
+      name: Publish Backend
       if: tag =~ ^v
       script: scripts/pypi-publish.sh
 
