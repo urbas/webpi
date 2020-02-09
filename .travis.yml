@@ -29,10 +29,7 @@ jobs:
       script: scripts/frontend-unit-tests.sh
 
     - name: Build Frontend
-      script: |
-        cd frontend
-        sudo docker build -t webpi-frontend:latest --build-arg NODE_VERSION=$(<../.nvmrc) .
-        sudo docker run -i webpi-frontend:latest > webpi-frontend.tar.gz
+      script: scripts/build-frontend.sh
 
     - name: Test Publish Backend
       script: TWINE_PASSWORD=$TWINE_TEST_PASSWORD scripts/pypi-publish.sh --repository-url https://test.pypi.org/legacy/
