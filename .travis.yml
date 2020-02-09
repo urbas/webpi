@@ -35,7 +35,7 @@ jobs:
         sudo docker run -i webpi-frontend:latest > webpi-frontend.tar.gz
 
     - name: Test Publish Backend
-      script: TWINE_PASSWORD=$TWINE_TEST_PASSWORD TWINE_EXTRA_ARGS="--repository-url https://test.pypi.org/legacy/" scripts/pypi-publish.sh
+      script: TWINE_PASSWORD=$TWINE_TEST_PASSWORD scripts/pypi-publish.sh --repository-url https://test.pypi.org/legacy/
 
     - name: Publish Backend
       if: tag =~ ^v
