@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "cypress open",
-    "itests": "wait-on http://backend:5000/api/v1/health && wait-on http://frontend:3000/ && cypress run --browser chrome",
+    "itests": "wait-on -l http://backend:5000/api/v1/health && wait-on -l http://frontend:3000/ && cypress run --browser chrome",
     "fmt": "prettier --write \"cypress/**/*.js\""
   },
   "devDependencies": {
